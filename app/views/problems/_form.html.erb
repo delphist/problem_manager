@@ -1,58 +1,98 @@
 <%= form_for problem do |f| %>
-    <div class="form-group">
-      <%= f.label :subject, "Тематика" %>
-      <%= f.collection_select(:status_id, Subject.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка") %>
+    <div class="form-group<%= " has-error" if problem.errors[:subject].any? %>">
+      <%= f.label :subject, "Тематика", :class => "control-label" %>
+      <%= f.collection_select(:subject_id, Subject.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка") %>
+      <%= render 'error_messages_for', :object => problem, :field => :subject %>
     </div>
 
     <div class="row">
-      <div class="col-md-9">
-        <div class="form-group">
-          <%= f.label :status, "Статус" %>
+      <div class="col-md-10">
+        <div class="form-group<%= " has-error" if problem.errors[:status].any? %>">
+          <%= f.label :status, "Статус", :class => "control-label" %>
           <%= f.collection_select(:status_id, Status.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите статус из списка") %>
+          <%= render 'error_messages_for', :object => problem, :field => :status %>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <%= f.label :rating, "Рейтинг" %>
-          <%= f.select(:rating, ["", ""] + (1..10).map {|i| [i,i] }, {}, :class => "select2 form-control", :placeholder => "От 1 до 10") %>
+      <div class="col-md-2">
+        <div class="form-group<%= " has-error" if problem.errors[:rating].any? %>">
+          <%= f.label :rating, "Рейтинг", :class => "control-label" %>
+          <%= f.select(:rating, ["", ""] + (0..10).map {|i| [i,i] }, {}, :class => "select2 form-control", :placeholder => "От 0 до 10") %>
+          <%= render 'error_messages_for', :object => problem, :field => :rating %>
         </div>
       </div>
     </div>
 
+    <div class="form-group<%= " has-error" if problem.errors[:comment].any? %>">
+      <%= f.label :comment, "Краткое описание", :class => "control-label" %>
+      <%= f.text_field(:comment, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => problem, :field => :comment %>
+    </div>
 
-
-    <div class="form-group">
-      <%= f.label :description, "Описание" %>
+    <div class="form-group<%= " has-error" if problem.errors[:description].any? %>">
+      <%= f.label :description, "Текст сообщения", :class => "control-label" %>
       <%= f.text_area(:description, :class => "form-control", :rows => 10) %>
+      <%= render 'error_messages_for', :object => problem, :field => :description %>
     </div>
 
-    <div class="form-group">
-      <%= f.label :person, "Ф.И.О" %>
+    <div class="form-group<%= " has-error" if problem.errors[:person].any? %>">
+      <%= f.label :person, "Ф.И.О", :class => "control-label" %>
       <%= f.text_field(:person, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => problem, :field => :person %>
     </div>
 
-    <div class="form-group">
-      <%= f.label :person, "Адрес" %>
-      <%= f.text_field(:address, :class => "form-control", :placeholder => "Введите адрес либо выберите обьект на карте") %>
+    <div class="form-group<%= " has-error" if problem.errors[:address].any? %>">
+      <%= f.label :person, "Адрес", :class => "control-label" %>
+      <%= f.text_field(:address, :class => "form-control address_select_input", :placeholder => "Введите адрес либо выберите обьект на карте") %>
+      <%= render 'error_messages_for', :object => problem, :field => :address %>
     </div>
 
-    <div class="form-group">
-      <%= f.label :link, "Ссылка" %>
+    <div class="alert alert-success<%= " hide" if problem.address_latitude.nil? %> address_flash address_success">
+      <p>Координаты: <span class="longitude"><%= problem.address_longitude %></span>, <span class="latitude"><%= problem.address_latitude %></span></p>
+      <p class="route">Расстояние до Москвы: <span class="distance"><%= problem.distance_km %></span></p>
+      <p class="auto_route hide">Расстояние на машине: <span class="distance"><%= problem.distance_car_km %></span></p>
+    </div>
+
+    <%= f.hidden_field :address_longitude, :class => "address_select_longitude" %>
+    <%= f.hidden_field :address_latitude, :class => "address_select_latitude" %>
+    <%= f.hidden_field :distance, :class => "address_select_distance" %>
+    <%= f.hidden_field :distance_car, :class => "address_select_distance_car" %>
+
+    <div class="alert alert-danger hide address_flash address_fail">
+      Обьект на карте не найден. Попробуйте уточнить запрос.
+    </div>
+
+    <div id="select_map" class="address_select_map"></div>
+
+    <%= render 'error_messages_for', :object => problem, :field => :address_longitude %>
+    <%= render 'error_messages_for', :object => problem, :field => :address_latitude %>
+    <%= render 'error_messages_for', :object => problem, :field => :distance %>
+    <%= render 'error_messages_for', :object => problem, :field => :distance_car %>
+
+    <div class="form-group<%= " has-error" if problem.errors[:link].any? %>">
+      <%= f.label :link, "Ссылка", :class => "control-label" %>
       <%= f.text_field(:link, :class => "form-control", :placeholder => "http://") %>
+      <%= render 'error_messages_for', :object => problem, :field => :link %>
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :link, "Вконтакте" %>
+        <div class="form-group<%= " has-error" if problem.errors[:vk].any? %>">
+          <%= f.label :vk, "Вконтакте", :class => "control-label" %>
           <%= f.text_field(:vk, :class => "form-control", :placeholder => "") %>
+          <%= render 'error_messages_for', :object => problem, :field => :vk %>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :email, "Email" %>
+        <div class="form-group<%= " has-error" if problem.errors[:email].any? %>">
+          <%= f.label :email, "Email", :class => "control-label" %>
           <%= f.text_field(:email, :class => "form-control") %>
+          <%= render 'error_messages_for', :object => problem, :field => :email %>
         </div>
       </div>
     </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit_form btn btn-default btn-primary">Сохранить</button>
+    </div>
+
 <% end %>

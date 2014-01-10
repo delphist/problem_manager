@@ -1,0 +1,5 @@
+<% if object.errors[field].any? %>
+    <span class="help-block">
+        <%= object.errors[field].first %>
+    </span>
+<% end %>

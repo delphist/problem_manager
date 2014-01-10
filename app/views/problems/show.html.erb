@@ -1,2 +1,22 @@
-<h1>Problem#show</h1>
-<p>Find me in app/views/problem/show.html.erb</p>
+<h3><%= @problem.comment %></h3>
+<hr />
+<p>
+<b>Тематика</b>: <%= @problem.subject.title %><br />
+<b>Статус</b>: <span class="glyphicon glyphicon-map-marker" style="color: #<%= @problem.status.map_color_css %>;"></span> <%= @problem.status.title %><br />
+<b>Рейтинг</b>: <%= @problem.rating %><br />
+<b>ФИО</b>: <%= @problem.person %><br />
+<b>Адрес</b>: <%= @problem.address %><br />
+<br />
+<b>Сообщение</b>:<br />
+<%= @problem.description %>
+</p>
+<b>Расстояние от Москвы</b>: <%= @problem.distance_km %> км<br />
+<% unless @problem.distance_car.nil? %>
+<b>Расстояние от Москвы на машине</b>: <%= @problem.distance_car_km %> км<br />
+<% end %>
+<b>Адрес на карте:</b><br />
+<div id="show_single_map" class="show_single_map" data-longitude="<%= @problem.address_longitude %>"  data-latitude="<%= @problem.address_latitude %>"></div>
+<br />
+<br />
+<a href="<%= edit_problem_path(@problem) %>" class="btn btn-primary">Редактировать</a>
+<a href="<%= delete_problem_path(@problem) %>" class="btn btn-danger">Удалить</a>

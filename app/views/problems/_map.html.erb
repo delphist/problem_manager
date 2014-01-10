@@ -1,0 +1,27 @@
+<script type="text/javascript">
+var problems = [
+<%
+@problems.each do |problem|
+  concat "[#{problem.address_longitude}, #{problem.address_latitude}, '#{problem.status.map_color}', #{problem.rating}, '#{problem.comment}', '#{edit_problem_path(problem)}'],\n".html_safe
+end
+%>
+];
+</script>
+
+<div id="show_all_map" class="show_all_map"></div>
+
+<hr />
+<h4>Обозначения:</h4>
+<%
+   colors = {}
+   Status.all.each do |status|
+     colors[status.map_color_css] = [] if colors[status.map_color_css].nil?
+     colors[status.map_color_css] << status.title
+   end
+
+   colors.each do |color, statuses|
+%>
+    <span class="glyphicon glyphicon-map-marker" style="color: #<%= color %>;"></span> — <%= statuses.join(", ") %><br />
+<%
+   end
+%>

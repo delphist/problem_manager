@@ -1,21 +1,57 @@
-<div class="jumbotron">
+<div class="well">
+  <%= form_tag(problems_path, :method => :get) do |f| %>
+      <div class="form-group">
+        <%= label_tag :subject_id, "Тематика", :class => "control-label" %>
+        <%= collection_select(nil, :subject_id, Subject.all, :id, :title, { :include_blank => true, :selected => params[:subject_id] }, { :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка" } ) %>
+      </div>
 
+      <div class="row">
+        <div class="col-md-9">
+          <div class="form-group">
+            <%= label_tag :status_id, "Статус", :class => "control-label" %>
+            <%= collection_select(nil, :status_id, Status.all, :id, :title, { :include_blank => true, :selected => params[:status_id] }, :class => "select2 form-control", :placeholder => "Выберите статус решения") %>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <%= label_tag :rating, "Рейтинг", :class => "control-label" %>
+            <%= select_tag(:rating, options_for_select(["", ""] + (0..10).map {|i| [i,i] }, params[:rating]), { :class => "select2 form-control", :placeholder => "Выберите рейтинг" } ) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :sort, "Сортировка", :class => "control-label" %>
+            <%= select_tag(:sort, options_for_select([["", ""],
+                                                      ["Рейтинг (возрастание)", "rating_asc"],
+                                                      ["Рейтинг (убывание)", "rating_desc"],
+                                                      ["Расстояние до Москвы (возрастание)", "distance_asc"],
+                                                      ["Расстояние до Москвы (убывание)", "distance_desc"],
+                                                      ["Расстояние до Москвы на машине (возрастание)", "distance_car_asc"],
+                                                      ["Расстояние до Москвы на машине (убывание)", "distance_car_desc"],
+                                                      ["Дата создания (возрастание)", "created_at_asc"],
+                                                      ["Дата создания (убывание)", "created_at_desc"],
+            ], params[:sort]), { :class => "select2 form-control", :placeholder => "Выберите поле для сортировки" } ) %>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= label_tag :view, "Тип отображения", :class => "control-label" %>
+            <%= select_tag(:view, options_for_select([["", ""], ["Таблица", "table"], ["Карта", "map"]], params[:view]), { :class => "select2 form-control", :placeholder => "Выберите тип отображения" } ) %>
+          </div>
+        </div>
+      </div>
+
+      <%= submit_tag "Фильтровать", :class => "btn btn-primary" %>
+  <% end %>
 </div>
 
-<ul class="nav nav-pills">
-  <li class="active"><a href="#"><span class="glyphicon glyphicon-th-list"></span> Таблица</a></li>
-  <li><a href="#"><span class="glyphicon glyphicon-map-marker"></span> Карта</a></li>
-</ul>
-
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <td>Описание</td>
-    <td>Тематика</td>
-    <td>Статус</td>
-  </tr>
-  </thead>
-  <tbody>
-
-  </tbody>
-</table>
+<% if @problems.count > 0 %>
+    <%= render :partial => params[:view] %>
+<% else %>
+    <div class="alert alert-warning">Проблем не найдено</div>
+<% end %>

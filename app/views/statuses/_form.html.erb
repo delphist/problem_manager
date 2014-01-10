@@ -1,0 +1,17 @@
+<%= form_for status do |f| %>
+    <div class="form-group<%= " has-error" if status.errors[:title].any? %>">
+      <%= f.label :title, "Название статуса", :class => "control-label" %>
+      <%= f.text_field(:title, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => status, :field => :title %>
+    </div>
+
+    <div class="form-group<%= " has-error" if status.errors[:map_color].any? %>">
+      <%= f.label :map_color, "Цвет маркера", :class => "control-label" %>
+      <%= f.select(:map_color, [["Синий", "blue"], ["Темно-синий", "darkblue"], ["Темно-зеленый", "darkgreen"], ["Темно-оранжевый", "darkorange"], ["Зеленый", "green"], ["Серый", "grey"], ["Голубой", "lightblue"], ["Ночной", "night"], ["Оранжевый", "orange"], ["Розовый", "pink"], ["Красный", "red"], ["Фиолетовый", "violet"], ["Белый", "white"], ["Желтый", "yellow"], ["Коричневый", "brown"], ["Черный", "black"]], {}, :class => "select2 form-control", :placeholder => "Выберите цвет") %>
+      <%= render 'error_messages_for', :object => status, :field => :map_color %>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-default btn-primary">Сохранить</button>
+    </div>
+<% end %>

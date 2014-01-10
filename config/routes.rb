@@ -2,10 +2,15 @@ ProblemManager::Application.routes.draw do
   devise_for :users
 
   resources :problems
-  resources :statuses
-  resources :subjects
+  get 'problems/:id/delete' => 'problems#destroy', :as => :delete_problem
 
-  root :to => 'problem#index'
+  resources :statuses
+  get 'statuses/:id/delete' => 'statuses#destroy', :as => :delete_status
+
+  resources :subjects
+  get 'subjects/:id/delete' => 'subjects#destroy', :as => :delete_subject
+
+  root :to => 'problems#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

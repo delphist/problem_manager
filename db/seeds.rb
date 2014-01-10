@@ -28,9 +28,9 @@ Subject.create(
 
 Status.create(
     :title => "В работе",
-    :map_color => "00ff00",
+    :map_color => "yellow",
 )
 Status.create(
     :title => "Ищем контакты",
-    :map_color => "ff0000",
+    :map_color => "blue",
 )

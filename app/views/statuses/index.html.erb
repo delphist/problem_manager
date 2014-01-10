@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td class="col-md-9">Название</td>
+    <td class="col-md-3"></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @statuses.each do |status| %>
+      <tr>
+        <td><span class="glyphicon glyphicon-map-marker" style="color: #<%= status.map_color_css %>;"></span> <%= link_to status.title, edit_status_path(status) %></td>
+        <td class="text-right">
+          <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_status_path(status), :class => "btn btn-xs" %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, delete_status_path(status), :class => "btn btn-xs" %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<a href="<%= new_status_path %>" class="btn btn-primary">Добавить статус</a>

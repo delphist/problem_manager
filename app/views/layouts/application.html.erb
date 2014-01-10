@@ -13,6 +13,7 @@
   <![endif]-->
 
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag 'http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU&key=AEnBz1IBAAAAvrj-CAMAwbOPTmPByLGgemBfikYqu3eyfsgAAAAAAAAAAACSqa0osiq2PfdB4Kc2XmXRUfw0DA==' %>
   <%= javascript_include_tag "application" %>
 </head>
 <body>
@@ -30,7 +31,8 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="<%= problems_path %>">Список проблем</a></li>
+          <li><a href="<%= problems_path %>">Список проблем</a></li>
+          <li><a href="<%= problems_path(:view => :map) %>">Карта проблем</a></li>
           <li><a href="<%= subjects_path %>">Тематики</a></li>
           <li><a href="<%= statuses_path %>">Статусы</a></li>
         </ul>

@@ -1,0 +1,16 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td style="width: 40px;"></td>
+    <td class="col-md-6">Описание</td>
+    <td class="col-md-3">Тематика</td>
+    <td class="col-md-2">Статус</td>
+    <td class="col-md-2"></td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @problems.each do |problem| %>
+      <%= render problem %>
+  <% end %>
+  </tbody>
+</table>
