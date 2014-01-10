@@ -16,37 +16,39 @@
   <%= javascript_include_tag "application" %>
 </head>
 <body>
-<div class="container">
-
-  <div class="navbar navbar-default navbar-inverse" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Меню</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Problem manager</a>
+<div id="wrap">
+  <div class="container">
+    <div class="navbar navbar-default navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Меню</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Problem manager</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Список проблем</a></li>
+          <li><a href="#">Тематики</a></li>
+          <li><a href="#">Статусы</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Список проблем</a></li>
-        <li><a href="#">Тематики</a></li>
-        <li><a href="#">Статусы</a></li>
-      </ul>
+
+    <div class="row">
+      <div class="span8">
+        <%= yield %>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="row">
-    <div class="span8">
-      <%= yield %>
-    </div>
+<div id="footer">
+  <div class="container">
+    <p class="text-muted">&copy; 2014</p>
   </div>
-
-  <footer>
-    <p>&copy; 2014</p>
-  </footer>
-
 </div>
 
 </body>
