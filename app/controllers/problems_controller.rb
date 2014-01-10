@@ -73,6 +73,6 @@ class ProblemsController < ApplicationController
   end
 
   def problem_params
-    params.require(:problem).permit(:subject_id, :status_id, :rating, :description, :comment, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk).delete_if {|k,v| v.blank?}
+    params.require(:problem).permit(:subject_id, :status_id, :rating, :description, :title, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk).delete_if {|k,v| v.blank?}
   end
 end
