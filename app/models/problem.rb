@@ -11,7 +11,7 @@ class Problem < ActiveRecord::Base
   validates :address_latitude, :presence => true
   validates :person, :presence => true, :length => { :in => 2..255 }
   validates :description, :presence => true, :length => { :in => 2..60000 }
-  validates :comment, :presence => true, :length => { :in => 2..255 }
+  validates :title, :presence => true, :length => { :in => 2..255 }
   validates :rating, :presence => true, :numericality => true, :inclusion => { :in => 0..10 }
 
   def distance_car_km

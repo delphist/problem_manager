@@ -22,10 +22,10 @@
       </div>
     </div>
 
-    <div class="form-group<%= " has-error" if problem.errors[:comment].any? %>">
-      <%= f.label :comment, "Краткое описание", :class => "control-label" %>
-      <%= f.text_field(:comment, :class => "form-control") %>
-      <%= render 'error_messages_for', :object => problem, :field => :comment %>
+    <div class="form-group<%= " has-error" if problem.errors[:title].any? %>">
+      <%= f.label :title, "Краткое описание", :class => "control-label" %>
+      <%= f.text_field(:title, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => problem, :field => :title %>
     </div>
 
     <div class="form-group<%= " has-error" if problem.errors[:description].any? %>">
@@ -68,10 +68,22 @@
     <%= render 'error_messages_for', :object => problem, :field => :distance %>
     <%= render 'error_messages_for', :object => problem, :field => :distance_car %>
 
-    <div class="form-group<%= " has-error" if problem.errors[:link].any? %>">
-      <%= f.label :link, "Ссылка", :class => "control-label" %>
-      <%= f.text_field(:link, :class => "form-control", :placeholder => "http://") %>
-      <%= render 'error_messages_for', :object => problem, :field => :link %>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group<%= " has-error" if problem.errors[:link].any? %>">
+          <%= f.label :link, "Ссылка", :class => "control-label" %>
+          <%= f.text_field(:link, :class => "form-control", :placeholder => "http://") %>
+          <%= render 'error_messages_for', :object => problem, :field => :link %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group<%= " has-error" if problem.errors[:phone].any? %>">
+          <%= f.label :phone, "Телефон", :class => "control-label" %>
+          <%= f.text_field(:phone, :class => "form-control") %>
+          <%= render 'error_messages_for', :object => problem, :field => :phone %>
+        </div>
+      </div>
     </div>
 
     <div class="row">

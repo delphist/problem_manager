@@ -1,6 +1,6 @@
 <tr>
   <td><span class="badge"><%= problem.rating %></span></td>
-  <td><b><%= link_to truncate(problem.comment, :length => 80), problem_path(problem) %></b><br /><small><%= problem.address %></small></td>
+  <td><b><%= link_to truncate(problem.title, :length => 80), problem_path(problem) %></b><br /><small><%= problem.address %></small></td>
   <td><%= link_to problem.subject.title, problems_path(:subject_id => problem.subject.id) %></td>
   <td><span class="glyphicon glyphicon-map-marker" style="color: #<%= problem.status.map_color_css %>;"></span> <%= link_to problem.status.title, problems_path(:status_id => problem.status.id) %></td>
   <td>

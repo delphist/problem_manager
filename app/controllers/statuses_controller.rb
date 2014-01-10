@@ -1,6 +1,6 @@
 class StatusesController < ApplicationController
   def index
-    @statuses = Status.all
+    @statuses = Status.page(params[:page]).per(40)
   end
 
   def new

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110102211) do
+ActiveRecord::Schema.define(version: 20140110185324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140110102211) do
     t.datetime "updated_at"
     t.float    "distance"
     t.float    "distance_car"
-    t.text     "comment"
+    t.text     "title"
   end
 
   add_index "problems", ["status_id"], name: "index_problems_on_status_id", using: :btree

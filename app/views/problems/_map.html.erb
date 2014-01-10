@@ -2,7 +2,7 @@
 var problems = [
 <%
 @problems.each do |problem|
-  concat "[#{problem.address_longitude}, #{problem.address_latitude}, '#{problem.status.map_color}', #{problem.rating}, '#{problem.comment}', '#{edit_problem_path(problem)}'],\n".html_safe
+  concat "[#{problem.address_longitude}, #{problem.address_latitude}, '#{problem.status.map_color}', #{problem.rating}, '#{problem.title}', '#{edit_problem_path(problem)}'],\n".html_safe
 end
 %>
 ];
