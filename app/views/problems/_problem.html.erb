@@ -1,5 +1,5 @@
 <tr>
-  <td><span class="badge"><%= problem.rating %></span></td>
+  <td style="background-color: #<%= problem.status.map_color_css %>;"><span class="badge"><%= problem.rating %></span></td>
   <td><span class="glyphicon glyphicon-map-marker" style="color: #<%= problem.status.map_color_css %>;"></span> <b><%= link_to truncate(problem.title, :length => 80), problem_path(problem) %></b><br /><small><i><%= problem.created_at.strftime('%d.%m.%Y') %></i> — <%= problem.address %></small></td>
   <td><small><abbr title="Прямое расстояние"><%= "П: " + problem.distance_km.to_i.to_s + " км" %></abbr><br/><%= ("<abbr title='На машине'>М: " + problem.distance_car_km.to_i.to_s + " км</abbr>").html_safe unless problem.distance_car.nil? %></small></td>
   <td><%= link_to problem.subject.title, problems_path(:subject_id => problem.subject.id) %></td>

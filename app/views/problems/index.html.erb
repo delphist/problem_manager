@@ -19,30 +19,35 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <%= label_tag :distance, "Расстояние", :class => "control-label" %>
-            <div class="row">
-              <div class="col-md-6"><%= text_field_tag(:distance_from, params[:distance_from], :class => "form-control", :placeholder => "от" ) %></div>
-              <div class="col-md-6"><%= text_field_tag(:distance_to, params[:distance_to], :class => "form-control", :placeholder => "до" ) %></div>
+            <div class="range-select" style="padding-right:10px;" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_from].to_i %>" data-to="<%=params[:distance_to].to_i %>">
+              <%= label_tag :distance, "Расстояние <span class='range-data'></span>".html_safe, :class => "control-label" %>
+              <div class="slider"></div>
+              <%= hidden_field_tag(:distance_from, params[:distance_from], :class => "from") %>
+              <%= hidden_field_tag(:distance_to, params[:distance_to], :class => "to") %>
             </div>
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="form-group">
-            <%= label_tag :distance_car, "Расстояние на машине", :class => "control-label" %>
-            <div class="row">
-              <div class="col-md-6"><%= text_field_tag(:distance_car_from, params[:distance_car_from], :class => "form-control", :placeholder => "от" ) %></div>
-              <div class="col-md-6"><%= text_field_tag(:distance_car_to, params[:distance_car_to], :class => "form-control", :placeholder => "до" ) %></div>
+            <div class="form-group">
+              <div class="range-select" style="padding-right:10px;" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_car_from].to_i %>" data-to="<%=params[:distance_car_to].to_i %>">
+                <%= label_tag :distance_car, "Расстояние (машина) <span class='range-data'></span>".html_safe, :class => "control-label" %>
+                <div class="slider"></div>
+                <%= hidden_field_tag(:distance_car_from, params[:distance_car_from], :class => "from") %>
+                <%= hidden_field_tag(:distance_car_to, params[:distance_car_to], :class => "to") %>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="form-group">
-            <%= label_tag :rating, "Рейтинг", :class => "control-label" %>
-            <div class="row">
-              <div class="col-md-6"><%= text_field_tag(:rating_from, params[:rating_from], :class => "form-control", :placeholder => "от" ) %></div>
-              <div class="col-md-6"><%= text_field_tag(:rating_to, params[:rating_to], :class => "form-control", :placeholder => "до" ) %></div>
+            <div class="range-select" data-min="0" data-max="10" data-step="1" data-from="<%=params[:rating_from].to_i %>" data-to="<%=params[:rating_to].to_i %>">
+              <%= label_tag :rating, "Рейтинг <span class='range-data'></span>".html_safe, :class => "control-label" %>
+              <div class="slider"></div>
+              <%= hidden_field_tag(:rating_from, params[:rating_from], :class => "from") %>
+              <%= hidden_field_tag(:rating_to, params[:rating_to], :class => "to") %>
             </div>
           </div>
         </div>

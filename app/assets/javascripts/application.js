@@ -16,12 +16,39 @@
 //= require select2
 //= require select2_locale_ru
 //= require jquery.maskedinput.min
+//= require jquery.nouislider.min
 //= require_tree .
 
 
 $(function() {
     $('.select2').select2();
     $(".phone-mask").mask("+7 (999) 999-99-99");
+
+    $(".range-select").each(function() {
+        var dd = $(this);
+
+        $(".slider", dd).noUiSlider({
+            range: [parseInt(dd.attr('data-min')), parseInt(dd.attr('data-max'))]
+            ,start: [parseInt(dd.attr('data-from').length > 0 ? dd.attr('data-from') : dd.attr('data-min')), parseInt(dd.attr('data-to').length > 0 ? dd.attr('data-to') : dd.attr('data-max'))]
+            ,handles: 2
+            ,step: parseInt(dd.attr('data-step'))
+            ,margin: 0
+            ,connect: true
+            ,direction: 'ltr'
+            ,orientation: 'horizontal'
+            ,behaviour: 'tap-drag'
+            ,serialization: {
+                mark: ','
+                ,resolution: 0.1
+                ,to: [ $(".from", dd), $(".to", dd) ]
+            }
+        }).change(function() {
+                $('.range-data', dd).html("(" + $(".from", dd).val() + " - " + $(".to", dd).val() + ")");
+            });
+
+        $('.range-data', dd).html("(" + $(".from", dd).val() + " - " + $(".to", dd).val() + ")");
+    });
+
 
     if($('#select_map').length > 0) {
         var select_map;
