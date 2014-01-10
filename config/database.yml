@@ -53,8 +53,9 @@ test:
 
 production:
   adapter: postgresql
+  host: ec2-107-20-224-35.compute-1.amazonaws.com
   encoding: unicode
-  database: problem_manager_production
+  database: dbfroue7kvfoj3
   pool: 5
-  username: problem_manager
-  password:
+  username: anscibpzuunkst
+  password: 6QCQGY-6HYo4-uRbpnlK_Zg8WK
