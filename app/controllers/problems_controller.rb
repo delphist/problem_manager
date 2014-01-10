@@ -12,18 +12,33 @@ class ProblemsController < ApplicationController
       @problems = Problem.order(sort_field + " " + sort_direction.upcase)
     end
 
-    unless params[:subject_id].blank?
-      subject = Subject.find params[:subject_id]
-      @problems = @problems.where(:subject_id => subject.id)
+    if not params[:subject_id].blank? and params[:subject_id].count > 0
+      @problems = @problems.where(:subject_id => params[:subject_id])
     end
 
-    unless params[:status_id].blank?
-      status = Status.find params[:status_id]
-      @problems = @problems.where(:status_id => status.id)
+    if not params[:status_id].blank? and params[:status_id].count > 0
+      @problems = @problems.where(:status_id => params[:status_id])
     end
 
-    unless params[:rating].blank?
-      @problems = @problems.where(:rating => params[:rating].to_i)
+    unless params[:rating_from].blank?
+      @problems = @problems.where("rating >= ?", params[:rating_from].to_i)
+    end
+    unless params[:rating_to].blank?
+      @problems = @problems.where("rating <= ?", params[:rating_to].to_i)
+    end
+
+    unless params[:distance_from].blank?
+      @problems = @problems.where("distance >= ?", params[:distance_from].to_f * 1000)
+    end
+    unless params[:distance_to].blank?
+      @problems = @problems.where("distance <= ?", params[:distance_to].to_f * 1000)
+    end
+
+    unless params[:distance_car_from].blank?
+      @problems = @problems.where("distance_car >= ?", params[:distance_car_from].to_f * 1000)
+    end
+    unless params[:distance_car_to].blank?
+      @problems = @problems.where("distance_car <= ?", params[:distance_car_to].to_f * 1000)
     end
 
     if params[:view].to_sym == :table
@@ -73,6 +88,6 @@ class ProblemsController < ApplicationController
   end
 
   def problem_params
-    params.require(:problem).permit(:subject_id, :status_id, :rating, :description, :title, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk).delete_if {|k,v| v.blank?}
+    params.require(:problem).permit(:subject_id, :status_id, :rating, :phone, :description, :title, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk).delete_if {|k,v| v.blank?}
   end
 end

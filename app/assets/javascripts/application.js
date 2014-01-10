@@ -15,11 +15,13 @@
 //= require bootstrap
 //= require select2
 //= require select2_locale_ru
+//= require jquery.maskedinput.min
 //= require_tree .
 
 
 $(function() {
     $('.select2').select2();
+    $(".phone-mask").mask("+7 (999) 999-99-99");
 
     if($('#select_map').length > 0) {
         var select_map;

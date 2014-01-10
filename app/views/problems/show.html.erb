@@ -18,6 +18,7 @@
   <% unless @problem.vk.nil? %>
       <b>Вконтакте</b>: <%= @problem.vk %><br />
   <% end %>
+  <b>Добавлено</b>: <%= @problem.created_at %><br />
   <br />
   <b>Сообщение</b>:<br />
   <%= @problem.description %>

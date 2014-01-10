@@ -2,21 +2,48 @@
   <%= form_tag(problems_path, :method => :get) do |f| %>
       <div class="form-group">
         <%= label_tag :subject_id, "Тематика", :class => "control-label" %>
-        <%= collection_select(nil, :subject_id, Subject.all, :id, :title, { :include_blank => true, :selected => params[:subject_id] }, { :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка" } ) %>
+        <%= select_tag(:subject_id, options_for_select(Subject.all.map {|i| [i.title,i.id] }, params[:subject_id]), { :class => "select2 form-control", :multiple => true, :placeholder => "Выберите тематику проблемы из списка" } ) %>
       </div>
 
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
           <div class="form-group">
             <%= label_tag :status_id, "Статус", :class => "control-label" %>
-            <%= collection_select(nil, :status_id, Status.all, :id, :title, { :include_blank => true, :selected => params[:status_id] }, :class => "select2 form-control", :placeholder => "Выберите статус решения") %>
+            <%= select_tag(:status_id, options_for_select(Status.all.map {|i| [i.title,i.id] }, params[:status_id]), { :class => "select2 form-control", :multiple => true, :placeholder => "Выберите статус решения" } ) %>
           </div>
         </div>
 
-        <div class="col-md-3">
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= label_tag :distance, "Расстояние", :class => "control-label" %>
+            <div class="row">
+              <div class="col-md-6"><%= text_field_tag(:distance_from, params[:distance_from], :class => "form-control", :placeholder => "от" ) %></div>
+              <div class="col-md-6"><%= text_field_tag(:distance_to, params[:distance_to], :class => "form-control", :placeholder => "до" ) %></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= label_tag :distance_car, "Расстояние на машине", :class => "control-label" %>
+            <div class="row">
+              <div class="col-md-6"><%= text_field_tag(:distance_car_from, params[:distance_car_from], :class => "form-control", :placeholder => "от" ) %></div>
+              <div class="col-md-6"><%= text_field_tag(:distance_car_to, params[:distance_car_to], :class => "form-control", :placeholder => "до" ) %></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
           <div class="form-group">
             <%= label_tag :rating, "Рейтинг", :class => "control-label" %>
-            <%= select_tag(:rating, options_for_select(["", ""] + (0..10).map {|i| [i,i] }, params[:rating]), { :class => "select2 form-control", :placeholder => "Выберите рейтинг" } ) %>
+            <div class="row">
+              <div class="col-md-6"><%= text_field_tag(:rating_from, params[:rating_from], :class => "form-control", :placeholder => "от" ) %></div>
+              <div class="col-md-6"><%= text_field_tag(:rating_to, params[:rating_to], :class => "form-control", :placeholder => "до" ) %></div>
+            </div>
           </div>
         </div>
       </div>
