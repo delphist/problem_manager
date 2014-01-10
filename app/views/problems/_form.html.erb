@@ -1,0 +1,58 @@
+<%= form_for problem do |f| %>
+    <div class="form-group">
+      <%= f.label :subject, "Тематика" %>
+      <%= f.collection_select(:status_id, Subject.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка") %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-9">
+        <div class="form-group">
+          <%= f.label :status, "Статус" %>
+          <%= f.collection_select(:status_id, Status.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите статус из списка") %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= f.label :rating, "Рейтинг" %>
+          <%= f.select(:rating, ["", ""] + (1..10).map {|i| [i,i] }, {}, :class => "select2 form-control", :placeholder => "От 1 до 10") %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <%= f.label :description, "Описание" %>
+      <%= f.text_area(:description, :class => "form-control", :rows => 10) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :person, "Ф.И.О" %>
+      <%= f.text_field(:person, :class => "form-control") %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :person, "Адрес" %>
+      <%= f.text_field(:address, :class => "form-control", :placeholder => "Введите адрес либо выберите обьект на карте") %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :link, "Ссылка" %>
+      <%= f.text_field(:link, :class => "form-control", :placeholder => "http://") %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :link, "Вконтакте" %>
+          <%= f.text_field(:vk, :class => "form-control", :placeholder => "") %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :email, "Email" %>
+          <%= f.text_field(:email, :class => "form-control") %>
+        </div>
+      </div>
+    </div>
+<% end %>

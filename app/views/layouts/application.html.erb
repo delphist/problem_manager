@@ -30,18 +30,17 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Список проблем</a></li>
-          <li><a href="#">Тематики</a></li>
-          <li><a href="#">Статусы</a></li>
+          <li class="active"><a href="<%= problems_path %>">Список проблем</a></li>
+          <li><a href="<%= subjects_path %>">Тематики</a></li>
+          <li><a href="<%= statuses_path %>">Статусы</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="<%= new_problem_path %>">Добавить проблему</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="row">
-      <div class="span8">
-        <%= yield %>
-      </div>
-    </div>
+    <%= yield %>
   </div>
 </div>
 

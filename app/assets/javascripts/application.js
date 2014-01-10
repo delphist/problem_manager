@@ -14,4 +14,11 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
+//= require select2
+//= require select2_locale_ru
 //= require_tree .
+
+
+$(function() {
+    $('.select2').select2();
+})

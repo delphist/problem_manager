@@ -1,7 +1,9 @@
 ProblemManager::Application.routes.draw do
-  get "problem/index"
-  get "problem/show"
   devise_for :users
+
+  resources :problems
+  resources :statuses
+  resources :subjects
 
   root :to => 'problem#index'
 
