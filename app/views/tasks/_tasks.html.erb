@@ -1,0 +1,44 @@
+<% content_for :heading_buttons do %>
+    <%= link_to "Добавить задание", new_task_path, :class => "btn btn-primary" %>
+<% end %>
+
+<% if @tasks.count > 0 %>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <td class="col-md-4">Название</td>
+        <% if current_page?(:action => :executing) %>
+            <td class="col-md-2">Постановщик</td>
+        <% else %>
+            <td class="col-md-2">Исполнитель</td>
+        <% end %>
+        <td class="col-md-3">Проблема</td>
+        <td class="col-md-2">Сроки</td>
+        <td class="col-md-1"></td>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+          <tr>
+            <td><%= link_to task.title, task_path(task) %></td>
+            <% if current_page?(:action => :executing) %>
+                <td><%= task.director.name %></td>
+            <% else %>
+                <td><%= task.executor.name %></td>
+            <% end %>
+            <td><%= task.problem.nil? ? "—" : task.problem.title %></td>
+            <td><%= Russian::strftime(task.deadline_at, '%d %B %Y') %></td>
+            <td class="text-right">
+              <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_task_path(task), :class => "btn btn-xs" %>
+              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, delete_task_path(task), :class => "btn btn-xs" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-warning">Заданий не найдено</div>
+<% end %>
+
+
+<%= paginate @tasks %>

@@ -5,6 +5,13 @@
       <%= render 'error_messages_for', :object => subject, :field => :title %>
     </div>
 
+    <% if subject.new_record? or subject.child_subjects.count == 0 %>
+        <div class="form-group<%= " has-error" if subject.errors[:parent].any? %>">
+          <%= f.label :parent_id, "Родительская тематика", :class => "control-label" %>
+          <%= f.select(:parent_id, options_for_select([["Отсутствует", nil]] + Subject.where(:parent_id => nil).where("id != ?", subject.id.to_i).map {|i| [i.title, i.id] }, subject.parent_id), {}, { :class => "select2 form-control", :placeholder => "Выберите родительскую тематику" } ) %>
+          <%= render 'error_messages_for', :object => subject, :field => :map_color %>
+        </div>
+    <% end %>
 
     <div class="form-actions">
       <button type="submit" class="btn btn-default btn-primary">Сохранить</button>

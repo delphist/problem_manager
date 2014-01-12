@@ -48,6 +48,17 @@ class ProblemsController < ApplicationController
 
   def show
     @problem = Problem.find params[:id]
+
+    @new_comment = Comment.new
+    @new_comment.problem = @problem
+    @new_comment.user = current_user
+
+    if request.post?
+      @new_comment.attributes = params.require(:comment).permit(:body)
+      if @new_comment.save
+        redirect_to problem_path(@problem)
+      end
+    end
   end
 
   def new
@@ -88,6 +99,6 @@ class ProblemsController < ApplicationController
   end
 
   def problem_params
-    params.require(:problem).permit(:subject_id, :status_id, :rating, :phone, :description, :title, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk).delete_if {|k,v| v.blank?}
+    params.require(:problem).permit(:subject_id, :status_id, :rating, :phone, :description, :title, :person, :address, :address_longitude, :address_latitude, :distance, :distance_car, :link, :email, :vk)
   end
 end

@@ -1,0 +1,57 @@
+<% breadcrumb @task %>
+<% content_for :heading_buttons do %>
+    <%= link_to "Редактировать", edit_task_path(@task), :class => "btn btn-primary" %>
+    <%= link_to "Удалить", delete_task_path(@task) , :class => "btn btn-danger" %>
+    <div class="pull-right">
+      <% if @task.deadline_at > Time.now %>
+        <small class="text-success">Истекает <%= Russian::strftime(@task.deadline_at, '%d %B %Y') %></small>
+      <% else %>
+        <small class="text-danger">Истекла <%= Russian::strftime(@task.deadline_at, '%d %B %Y') %></small>
+      <% end %>
+    </div>
+<% end %>
+
+<% if @task.completed_request %>
+    <% if @task.director == current_user %>
+        <div class="alert alert-success">
+          Исполнитель пометил эту задачу как выполненную. Пожалуйста, примите либо отклоните ее.
+        </div>
+    <% else %>
+        <div class="alert alert-info">
+          Это задание помечено как выполненное и ожидает подтверждение постановщика.
+        </div>
+    <% end %>
+<% end %>
+
+
+<table class="table">
+  <tr>
+    <td class="col-md-6"><b>Постановщик:</b> <%= @task.director.name %></td>
+    <td class="col-md-6"><b>Исполнитель:</b> <%= @task.executor.name %></td>
+  </tr>
+</table>
+
+<div class="well"><%= @task.description %></div>
+
+<% unless @task.problem.nil? %>
+    <table class="table">
+      <tr>
+        <td><b>Проблема:</b> <a href="<%= problem_path(@task.problem) %>"><%= @task.problem.title %></a></td>
+      </tr>
+      <tr>
+        <td><b>Статус:</b> <%= @task.status_title %></td>
+      </tr>
+    </table>
+<% end %>
+
+<hr />
+
+<div class="form-controls">
+  <% if @task.director == current_user %>
+      <%= link_to("Принять", task_accept_path(@task), :class => "btn btn-success") if not @task.completed %>
+      <%= link_to("Отклонить", task_decline_path(@task), :class => "btn btn-danger") if @task.completed_request and not @task.completed %>
+  <% elsif @task.executor == current_user %>
+      <%= link_to("Выполнить", task_complete_path(@task), :class => "btn btn-success") if not @task.completed_request and not @task.completed %>
+      <%= link_to("Отменить", task_cancel_path(@task), :class => "btn btn-success") if @task.completed_request and not @task.completed %>
+  <% end %>
+</div>

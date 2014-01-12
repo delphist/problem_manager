@@ -2,6 +2,8 @@ class Problem < ActiveRecord::Base
   belongs_to :subject
   belongs_to :status
 
+  has_many :comments
+
   validates :subject, :presence => true
   validates :status, :presence => true
   validates :email, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
@@ -9,10 +11,14 @@ class Problem < ActiveRecord::Base
   validates :link, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
   validates :address, :presence => true, :length => { :in => 2..255 }
   validates :address_latitude, :presence => true
+  validates :address_longitude, :presence => true
   validates :person, :presence => true, :length => { :in => 2..255 }
   validates :description, :presence => true, :length => { :in => 2..60000 }
   validates :title, :presence => true, :length => { :in => 2..255 }
   validates :rating, :presence => true, :numericality => true, :inclusion => { :in => 0..10 }
+  validates :phone, :presence => false
+
+  normalize_attributes :email, :vk, :link, :address, :person, :description, :title, :phone
 
   def distance_car_km
     if distance_car.nil?

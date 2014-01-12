@@ -56,3 +56,45 @@ crumb :new_status do
   link "Новый статус", new_status_path
   parent :statuses
 end
+
+# Users
+crumb :users do
+  link "Пользователи", users_path
+end
+crumb :user do |user|
+  link user.name, user_path(user)
+  parent :users
+end
+crumb :edit_user do |user|
+  link "Редактировать", edit_user_path(user)
+  parent :user, user
+end
+crumb :new_user do
+  link "Новый пользователь", new_user_path
+  parent :users
+end
+
+# Tasks
+crumb :tasks do
+  link "Задания", tasks_path
+end
+crumb :tasks_directioning do
+  link "Поставленные задания", tasks_directioning_path
+  parent :tasks
+end
+crumb :tasks_executing do
+  link "Задания для выполнения", tasks_executing_path
+  parent :tasks
+end
+crumb :task do |task|
+  link task.title, task_path(task)
+  parent :tasks
+end
+crumb :edit_task do |task|
+  link "Редактировать", edit_task_path(task)
+  parent :task, task
+end
+crumb :new_task do
+  link "Новое задание", new_task_path
+  parent :tasks
+end

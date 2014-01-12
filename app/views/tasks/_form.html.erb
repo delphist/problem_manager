@@ -1,0 +1,48 @@
+<%= form_for task do |f| %>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="form-group<%= " has-error" if task.errors[:title].any? %>">
+          <%= f.label :title, "Название задания", :class => "control-label" %>
+          <%= f.text_field(:title, :class => "form-control") %>
+          <%= render 'error_messages_for', :object => task, :field => :title %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group<%= " has-error" if task.errors[:deadline_at].any? %>">
+          <%= f.label :deadline_at, "Сроки выполнения", :class => "control-label" %>
+          <div class="input-group datepicker">
+            <%= f.date_field(:deadline_at, :class => "form-control", "data-format" => "YYYY-MM-DD") %>
+            <a href="#" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></a>
+          </div>
+          <%= render 'error_messages_for', :object => task, :field => :deadline_at %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group<%= " has-error" if task.errors[:problem].any? %>">
+          <%= f.label :problem_id, "Проблема", :class => "control-label" %>
+          <%= f.collection_select(:problem_id, Problem.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите проблему") %>
+          <%= render 'error_messages_for', :object => task, :field => :problem_id %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group<%= " has-error" if task.errors[:executor].any? %>">
+          <%= f.label :executor_id, "Исполнитель", :class => "control-label" %>
+          <%= f.collection_select(:executor_id, User.where("id != ?", current_user.id).all, :id, :name, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите исполнителя") %>
+          <%= render 'error_messages_for', :object => task, :field => :executor_id %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group<%= " has-error" if task.errors[:description].any? %>">
+      <%= f.label :description, "Название задания", :class => "control-label" %>
+      <%= f.text_area(:description, :class => "form-control", rows: 10) %>
+      <%= render 'error_messages_for', :object => task, :field => :description %>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-default btn-primary">Сохранить</button>
+    </div>
+<% end %>

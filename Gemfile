@@ -48,5 +48,7 @@ gem 'devise'
 gem 'kaminari'
 gem 'russian'
 gem 'cancan'
-gem 'whenever'
+gem 'whenever', :require => false
 gem 'gretel'
+gem 'attribute_normalizer'
+gem 'validates_timeliness'

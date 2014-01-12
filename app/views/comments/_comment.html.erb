@@ -1,0 +1,5 @@
+<a name="comment-<%=comment.id%>"></a>
+<blockquote>
+  <p style="font-size: 14px;"><%= format_comment comment %></p>
+  <a href="#" class="mention-user" data-user-id="<%= comment.user.id %>"><%= comment.user.name %></a> <span class="text-muted"><%= Russian::strftime(comment.created_at, '%d %B %Y, %H:%M') %></span>
+</blockquote>

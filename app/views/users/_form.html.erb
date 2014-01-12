@@ -1,0 +1,29 @@
+<%= form_for user do |f| %>
+    <div class="form-group<%= " has-error" if user.errors[:name].any? %>">
+      <%= f.label :name, "Имя", :class => "control-label" %>
+      <%= f.text_field(:name, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => user, :field => :name %>
+    </div>
+
+    <div class="form-group<%= " has-error" if user.errors[:email].any? %>">
+      <%= f.label :email, "Email", :class => "control-label" %>
+      <%= f.text_field(:email, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => user, :field => :email %>
+    </div>
+
+    <div class="form-group<%= " has-error" if user.errors[:password].any? %>">
+      <%= f.label :password, "Пароль", :class => "control-label" %>
+      <%= f.password_field(:password, :class => "form-control") %>
+      <%= render 'error_messages_for', :object => user, :field => :password %>
+    </div>
+
+    <div class="form-group<%= " has-error" if user.errors[:access_level].any? %>">
+      <%= f.label :access_level, "Уровень доступа", :class => "control-label" %>
+      <%= f.select(:access_level, User::ACCESS_LEVELS.map { |k,v| [v,k]}, {}, :class => "select2 form-control", :placeholder => "Выберите уровень доступа") %>
+      <%= render 'error_messages_for', :object => user, :field => :access_level %>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-default btn-primary">Сохранить</button>
+    </div>
+<% end %>

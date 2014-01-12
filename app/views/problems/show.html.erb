@@ -2,33 +2,64 @@
 <% content_for :heading_buttons do %>
     <%= link_to "Редактировать", edit_problem_path(@problem), :class => "btn btn-primary" %>
     <%= link_to "Удалить", delete_problem_path(@problem) , :class => "btn btn-danger" %>
+    <div class="pull-right">
+      <small><%= Russian::strftime(@problem.created_at, '%d %B %Y, %H:%M') %></small>
+    </div>
 <% end %>
-<p>
-  <b>Тематика</b>: <%= @problem.subject.title %><br />
-  <b>Статус</b>: <span class="glyphicon glyphicon-map-marker" style="color: #<%= @problem.status.map_color_css %>;"></span> <%= @problem.status.title %><br />
-  <b>Рейтинг</b>: <%= @problem.rating %><br />
-  <b>ФИО</b>: <%= @problem.person %><br />
-  <b>Адрес</b>: <%= @problem.address %><br />
-  <% unless @problem.link.nil? %>
-      <b>Ссылка</b>: <%= link_to @problem.link, @problem.link %><br />
-  <% end %>
-  <% unless @problem.email.nil? %>
-      <b>Email</b>: <%= mail_to @problem.email %><br />
-  <% end %>
-  <% unless @problem.phone.nil? %>
-      <b>Телефон</b>: <%= @problem.phone %><br />
-  <% end %>
-  <% unless @problem.vk.nil? %>
-      <b>Вконтакте</b>: <%= @problem.vk %><br />
-  <% end %>
-  <b>Добавлено</b>: <%= @problem.created_at %><br />
-  <br />
-  <b>Сообщение</b>:<br />
-  <%= @problem.description %>
-</p>
-<b>Расстояние от Москвы</b>: <%= @problem.distance_km %> км<br />
-<% unless @problem.distance_car.nil? %>
-    <b>Расстояние от Москвы на машине</b>: <%= @problem.distance_car_km %> км<br />
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="table">
+      <tr>
+        <td colspan="2"><b><%= @problem.subject.title %></b></td>
+      </tr>
+      <tr>
+        <td class="col-md-6">Статус: <%= @problem.status.title %></td>
+        <td class="col-md-6">Рейтинг: <%= @problem.rating %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-user"></span> <%= @problem.person %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-map-marker"></span> <%= @problem.address %></td>
+      </tr>
+      <tr>
+        <td class="col-md-6"><span class="glyphicon glyphicon-phone"></span> <small><%= @problem.phone.nil? ? 'отсутствует' : @problem.phone %></small></td>
+        <td class="col-md-6"><span class="glyphicon glyphicon-envelope"></span> <small><%= @problem.email.nil? ? 'отсутствует' : mail_to(@problem.email) %></small></td>
+      </tr>
+      <tr>
+        <td class="col-md-6"><span class="glyphicon glyphicon-link"></span> <small><%= @problem.link.nil? ? 'отсутствует' : link_to(truncate(@problem.link, :length => 35), @problem.link) %></small></td>
+        <td class="col-md-6"><small><%= @problem.vk.nil? ? '&nbsp;'.html_safe : @problem.vk %></small></td>
+      </tr>
+      <tr>
+        <td class="col-md-6"><span class="glyphicon glyphicon-plane"></span> <%= @problem.distance_km %> км</td>
+        <td class="col-md-6"><span class="glyphicon glyphicon-road"></span> <%= @problem.distance_car_km %> км</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <div id="show_single_map" class="show_single_map" data-longitude="<%= @problem.address_longitude %>"  data-latitude="<%= @problem.address_latitude %>"></div>
+  </div>
+</div>
+
+<div class="well"><%= @problem.description %></div>
+
+<% if @problem.comments.count > 0 %>
+    <h4><%= @problem.comments.count%> <%= Russian.pluralize(@problem.comments.count, "комментарий", "комментария", "комментариев") %></h4>
 <% end %>
-<b>Адрес на карте:</b><br />
-<div id="show_single_map" class="show_single_map" data-longitude="<%= @problem.address_longitude %>"  data-latitude="<%= @problem.address_latitude %>"></div>
+<% @problem.comments.each do |comment| %>
+    <%= render comment %>
+<% end %>
+
+<h4>Оставить комментарий</h4>
+<%= form_for @new_comment, url: problem_path(@problem) do |f| %>
+    <div class="form-group<%= " has-error" if @new_comment.errors[:body].any? %>">
+      <%= f.text_area :body, class: "form-control mentionable", rows: 4 %>
+      <%= render 'error_messages_for', :object => @new_comment, :field => :body %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Отправить", class: "btn btn-primary" %>
+    </div>
+<% end %>

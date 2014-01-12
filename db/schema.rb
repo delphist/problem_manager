@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140112130227) do
+ActiveRecord::Schema.define(version: 20140112214458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140112130227) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "comments", ["problem_id"], name: "index_comments_on_problem_id", using: :btree
@@ -71,7 +72,7 @@ ActiveRecord::Schema.define(version: 20140112130227) do
     t.boolean  "completed",         default: false, null: false
     t.boolean  "completed_request", default: false, null: false
     t.datetime "completed_at"
-    t.datetime "deadline_at",                       null: false
+    t.date     "deadline_at",                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,6 +90,8 @@ ActiveRecord::Schema.define(version: 20140112130227) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "access_level"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

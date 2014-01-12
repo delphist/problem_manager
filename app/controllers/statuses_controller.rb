@@ -7,6 +7,11 @@ class StatusesController < ApplicationController
     @status = Status.new
   end
 
+  def show
+    @status = Status.find params[:id]
+    redirect_to edit_status_path(@status)
+  end
+
   def edit
     @status = Status.find params[:id]
   end
@@ -41,6 +46,6 @@ class StatusesController < ApplicationController
   private
 
     def status_params
-      params.require(:status).permit(:title, :map_color).delete_if {|k,v| v.blank?}
+      params.require(:status).permit(:title, :map_color)
     end
 end

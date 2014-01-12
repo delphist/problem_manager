@@ -42,8 +42,8 @@
           <li><a href="<%= problems_path(:view => :map) %>">Карта</a></li>
           <li><a href="<%= subjects_path %>">Тематики</a></li>
           <li><a href="<%= statuses_path %>">Статусы</a></li>
-          <li><a href="<%= subjects_path %>">Задания</a></li>
-          <li><a href="<%= subjects_path %>">Пользователи</a></li>
+          <li><a href="<%= tasks_path %>">Задания <span class="badge"><%= @highlighted_tasks %></span></a></li>
+          <li><a href="<%= users_path %>">Пользователи</a></li>
         </ul>
       </div>
     </div>

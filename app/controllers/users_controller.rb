@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.page(params[:page]).per(10)
+    @users = User.order("id DESC").page(params[:page]).per(10)
   end
 
   def new
@@ -22,7 +22,9 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    @user.attributes = user_params
+    set_attributes = user_params.to_hash
+    set_attributes.delete "password" if set_attributes["password"].nil? or set_attributes["password"].blank?
+    @user.attributes = set_attributes
 
     if @user.save
       redirect_to users_path
@@ -37,7 +39,9 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def user_params
-    params.require(:user).permit(:name).delete_if {|k,v| v.blank?}
-  end
+  private
+
+    def user_params
+      params.require(:user).permit(:name, :password, :email, :access_level)
+    end
 end

@@ -1,17 +1,9 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
  *= require bootstrap
  *= require select2
  *= require select2-bootstrap
  *= require jquery.nouislider.min
+ *= require bootstrap-datetimepicker.min
  *= require_self
  */
 
@@ -48,7 +40,8 @@ body {
 
 .show_single_map {
     width: 100%;
-    height: 600px;
+    height: 300px;
+    margin-bottom: 20px;
     background-color: #eee;
 }
 
@@ -61,4 +54,8 @@ body {
 .range-select .slider {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.noUi-connect {
+    background-color: #428bca;
 }

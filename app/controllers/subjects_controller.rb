@@ -7,6 +7,11 @@ class SubjectsController < ApplicationController
     @subject = Subject.new
   end
 
+  def show
+    @subject = Subject.find params[:id]
+    redirect_to edit_subject_path(@subject)
+  end
+
   def edit
     @subject = Subject.find params[:id]
   end
@@ -43,6 +48,6 @@ class SubjectsController < ApplicationController
   private
 
     def subject_params
-      params.require(:subject).permit(:title).delete_if {|k,v| v.blank?}
+      params.require(:subject).permit(:title, :parent_id)
     end
 end

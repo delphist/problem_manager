@@ -1,0 +1,31 @@
+<% breadcrumb :users %>
+<% content_for :heading_buttons do %>
+    <%= link_to "Добавить пользователя", new_user_path, :class => "btn btn-primary" %>
+<% end %>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td class="col-md-4">Имя</td>
+    <td class="col-md-4">E-mail</td>
+    <td class="col-md-3">Доступ</td>
+    <td class="col-md-1"></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, edit_user_path(user) %></td>
+        <td><%= mail_to user.email %></td>
+        <td><%= user.access_level_title %></td>
+        <td class="text-right">
+          <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_user_path(user), :class => "btn btn-xs" %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, delete_user_path(user), :class => "btn btn-xs" %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users %>

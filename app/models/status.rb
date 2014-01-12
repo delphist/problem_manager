@@ -22,6 +22,8 @@ class Status < ActiveRecord::Base
 
   validates :title, :presence => true, :length => { :in => 2..255 }
 
+  normalize_attributes :title
+
   def map_color_css
     COLORS[map_color.to_sym]
   end
