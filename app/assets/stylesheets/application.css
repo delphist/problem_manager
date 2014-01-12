@@ -57,3 +57,8 @@ body {
     height: 600px;
     background-color: #eee;
 }
+
+.range-select .slider {
+    padding-left: 15px;
+    padding-right: 15px;
+}

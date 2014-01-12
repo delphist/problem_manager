@@ -1,10 +1,17 @@
+<% breadcrumbs do |links| %>
+    <% if links.any? %>
+        <% content_for :title do %>
+            <%= links[1..-1].reverse.map { |e| e.text }.join(" → ") %> — PM
+        <% end %>
+    <% end %>
+<% end %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? yield(:title) : "ProblemManager" %></title>
+  <title><%= yield :title %></title>
   <%= csrf_meta_tags %>
 
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -27,20 +34,36 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<%= root_path %>">Problem manager</a>
+        <a class="navbar-brand" href="<%= root_path %>">PM</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="<%= problems_path %>">Список проблем</a></li>
-          <li><a href="<%= problems_path(:view => :map) %>">Карта проблем</a></li>
+          <li><a href="<%= problems_path %>">Проблемы</a></li>
+          <li><a href="<%= problems_path(:view => :map) %>">Карта</a></li>
           <li><a href="<%= subjects_path %>">Тематики</a></li>
           <li><a href="<%= statuses_path %>">Статусы</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="<%= new_problem_path %>">Добавить проблему</a></li>
+          <li><a href="<%= subjects_path %>">Задания</a></li>
+          <li><a href="<%= subjects_path %>">Пользователи</a></li>
         </ul>
       </div>
     </div>
+
+    <div class="page-header">
+      <h3>
+        <% if content_for?(:heading) %>
+            <%= yield :heading %>
+        <% else %>
+            <% breadcrumbs do |links| %>
+                <% if links.any? %>
+                    <%= links.last.text %>
+                <% end %>
+            <% end %>
+        <% end %>
+        <%= yield :heading_buttons %>
+      </h3>
+    </div>
+
+    <%= breadcrumbs style: :bootstrap %>
 
     <%= yield %>
   </div>

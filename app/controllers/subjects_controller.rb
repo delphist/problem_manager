@@ -40,7 +40,9 @@ class SubjectsController < ApplicationController
     redirect_to subjects_path
   end
 
-  def subject_params
-    params.require(:subject).permit(:title).delete_if {|k,v| v.blank?}
-  end
+  private
+
+    def subject_params
+      params.require(:subject).permit(:title).delete_if {|k,v| v.blank?}
+    end
 end

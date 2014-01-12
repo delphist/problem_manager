@@ -1,3 +1,7 @@
+<% breadcrumb :problems %>
+<% content_for :heading_buttons do %>
+    <%= link_to "Добавить проблему", new_problem_path, :class => "btn btn-primary" %>
+<% end %>
 <div class="well">
   <%= form_tag(problems_path, :method => :get) do |f| %>
       <div class="form-group">
@@ -12,14 +16,12 @@
             <%= select_tag(:status_id, options_for_select(Status.all.map {|i| [i.title,i.id] }, params[:status_id]), { :class => "select2 form-control", :multiple => true, :placeholder => "Выберите статус решения" } ) %>
           </div>
         </div>
-
-
       </div>
 
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <div class="range-select" style="padding-right:10px;" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_from] %>" data-to="<%=params[:distance_to] %>">
+            <div class="range-select" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_from] %>" data-to="<%=params[:distance_to] %>">
               <%= label_tag :distance, "Расстояние <span class='range-data'></span>".html_safe, :class => "control-label" %>
               <div class="slider"></div>
               <%= hidden_field_tag(:distance_from, params[:distance_from], :class => "from") %>
@@ -31,7 +33,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <div class="form-group">
-              <div class="range-select" style="padding-right:10px;" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_car_from] %>" data-to="<%=params[:distance_car_to] %>">
+              <div class="range-select" data-min="1" data-max="10000" data-step="100" data-from="<%=params[:distance_car_from] %>" data-to="<%=params[:distance_car_to] %>">
                 <%= label_tag :distance_car, "Расстояние (машина) <span class='range-data'></span>".html_safe, :class => "control-label" %>
                 <div class="slider"></div>
                 <%= hidden_field_tag(:distance_car_from, params[:distance_car_from], :class => "from") %>
@@ -66,7 +68,7 @@
                                                       ["Расстояние до Москвы на машине (убывание)", "distance_car_desc"],
                                                       ["Дата создания (возрастание)", "created_at_asc"],
                                                       ["Дата создания (убывание)", "created_at_desc"],
-            ], params[:sort]), { :class => "select2 form-control", :placeholder => "Выберите поле для сортировки" } ) %>
+                                                     ], params[:sort]), { :class => "select2 form-control", :placeholder => "Выберите поле для сортировки" } ) %>
           </div>
         </div>
 
@@ -81,6 +83,9 @@
       <%= submit_tag "Фильтровать", :class => "btn btn-primary" %>
   <% end %>
 </div>
+
+<a href="<%= new_problem_path %>" class="btn btn-primary">Добавить проблему</a>
+<hr />
 
 <% if @problems.count > 0 %>
     <%= render :partial => params[:view] %>

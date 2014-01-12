@@ -1,5 +1,8 @@
-<h3><%= @problem.title %></h3>
-<hr />
+<% breadcrumb @problem %>
+<% content_for :heading_buttons do %>
+    <%= link_to "Редактировать", edit_problem_path(@problem), :class => "btn btn-primary" %>
+    <%= link_to "Удалить", delete_problem_path(@problem) , :class => "btn btn-danger" %>
+<% end %>
 <p>
   <b>Тематика</b>: <%= @problem.subject.title %><br />
   <b>Статус</b>: <span class="glyphicon glyphicon-map-marker" style="color: #<%= @problem.status.map_color_css %>;"></span> <%= @problem.status.title %><br />
@@ -29,7 +32,3 @@
 <% end %>
 <b>Адрес на карте:</b><br />
 <div id="show_single_map" class="show_single_map" data-longitude="<%= @problem.address_longitude %>"  data-latitude="<%= @problem.address_latitude %>"></div>
-<br />
-<br />
-<a href="<%= edit_problem_path(@problem) %>" class="btn btn-primary">Редактировать</a>
-<a href="<%= delete_problem_path(@problem) %>" class="btn btn-danger">Удалить</a>

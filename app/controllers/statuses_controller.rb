@@ -14,8 +14,7 @@ class StatusesController < ApplicationController
   def create
     @status = Status.new(status_params)
 
-    if @status.valid?
-      @status.save
+    if @status.save
       redirect_to statuses_path
     else
       render "new"
@@ -26,8 +25,7 @@ class StatusesController < ApplicationController
     @status = Status.find params[:id]
     @status.attributes = status_params
 
-    if @status.valid?
-      @status.save
+    if @status.save
       redirect_to statuses_path
     else
       render "edit"
@@ -40,7 +38,9 @@ class StatusesController < ApplicationController
     redirect_to statuses_path
   end
 
-  def status_params
-    params.require(:status).permit(:title, :map_color).delete_if {|k,v| v.blank?}
-  end
+  private
+
+    def status_params
+      params.require(:status).permit(:title, :map_color).delete_if {|k,v| v.blank?}
+    end
 end

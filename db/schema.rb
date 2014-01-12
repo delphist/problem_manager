@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110185324) do
+ActiveRecord::Schema.define(version: 20140112130227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: true do |t|
+    t.integer  "problem_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["problem_id"], name: "index_comments_on_problem_id", using: :btree
 
   create_table "problems", force: true do |t|
     t.integer  "subject_id"
@@ -48,6 +57,21 @@ ActiveRecord::Schema.define(version: 20140110185324) do
 
   create_table "subjects", force: true do |t|
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "parent_id"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.integer  "director_id",                       null: false
+    t.integer  "executor_id",                       null: false
+    t.integer  "problem_id"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "completed",         default: false, null: false
+    t.boolean  "completed_request", default: false, null: false
+    t.datetime "completed_at"
+    t.datetime "deadline_at",                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

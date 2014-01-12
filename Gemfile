@@ -36,12 +36,17 @@ end
 gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'devise'
+# To fix heroku asset pipeline bug
 gem 'rails_12factor', group: :production
+
+gem 'devise'
 gem 'kaminari'
 gem 'russian'
+gem 'cancan'
+gem 'whenever'
+gem 'gretel'
