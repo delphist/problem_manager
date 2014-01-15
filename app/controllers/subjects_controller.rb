@@ -1,23 +1,16 @@
 class SubjectsController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @subjects = Subject.page(params[:page]).per(40)
   end
 
-  def new
-    @subject = Subject.new
-  end
-
   def show
-    @subject = Subject.find params[:id]
     redirect_to edit_subject_path(@subject)
   end
 
-  def edit
-    @subject = Subject.find params[:id]
-  end
-
   def create
-    @subject = Subject.new(subject_params)
+    @subject.attributes = subject_params
 
     if @subject.valid?
       @subject.save
@@ -28,7 +21,6 @@ class SubjectsController < ApplicationController
   end
 
   def update
-    @subject = Subject.find params[:id]
     @subject.attributes = subject_params
 
     if @subject.valid?
@@ -40,7 +32,6 @@ class SubjectsController < ApplicationController
   end
 
   def destroy
-    @subject = Subject.find params[:id]
     @subject.destroy
     redirect_to subjects_path
   end

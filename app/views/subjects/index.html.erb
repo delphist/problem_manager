@@ -14,7 +14,7 @@
   <tbody>
   <% @subjects.each do |subject| %>
       <tr>
-        <td><%= link_to subject.title, edit_subject_path(subject) %></td>
+        <td><%= link_to subject.full_title_joined, edit_subject_path(subject) %></td>
         <td class="text-right">
           <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_subject_path(subject), :class => "btn btn-xs" %>
           <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, delete_subject_path(subject), :class => "btn btn-xs" %>

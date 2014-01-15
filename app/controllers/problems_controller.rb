@@ -1,4 +1,6 @@
 class ProblemsController < ApplicationController
+  load_and_authorize_resource
+
   def index
     params[:sort] ||= "created_at_desc"
     params[:view] ||= "table"
@@ -47,13 +49,13 @@ class ProblemsController < ApplicationController
   end
 
   def show
-    @problem = Problem.find params[:id]
-
     @new_comment = Comment.new
     @new_comment.problem = @problem
     @new_comment.user = current_user
 
     if request.post?
+      authorize! :create, Comment
+
       @new_comment.attributes = params.require(:comment).permit(:body)
       if @new_comment.save
         redirect_to problem_path(@problem)
@@ -61,16 +63,8 @@ class ProblemsController < ApplicationController
     end
   end
 
-  def new
-    @problem = Problem.new
-  end
-
-  def edit
-    @problem = Problem.find params[:id]
-  end
-
   def create
-    @problem = Problem.new(problem_params)
+    @problem.attributes = problem_params
 
     if @problem.valid?
       @problem.save
@@ -81,7 +75,6 @@ class ProblemsController < ApplicationController
   end
 
   def update
-    @problem = Problem.find params[:id]
     @problem.attributes = problem_params
 
     if @problem.valid?
@@ -93,7 +86,6 @@ class ProblemsController < ApplicationController
   end
 
   def destroy
-    @problem = Problem.find params[:id]
     @problem.destroy
     redirect_to problems_path
   end

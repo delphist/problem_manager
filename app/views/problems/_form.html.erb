@@ -1,7 +1,7 @@
 <%= form_for problem do |f| %>
     <div class="form-group<%= " has-error" if problem.errors[:subject].any? %>">
       <%= f.label :subject, "Тематика", :class => "control-label" %>
-      <%= f.collection_select(:subject_id, Subject.all, :id, :title, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка") %>
+      <%= f.collection_select(:subject_id, Subject.all, :id, :full_title_joined, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите тематику проблемы из списка") %>
       <%= render 'error_messages_for', :object => problem, :field => :subject %>
     </div>
 

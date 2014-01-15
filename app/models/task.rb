@@ -11,6 +11,8 @@ class Task < ActiveRecord::Base
 
   normalize_attributes :title, :description
 
+  after_create :notification_create
+
   def deadline_days
     (Time.zone.now - deadline_at).to_i / 1.day
   end
@@ -25,5 +27,50 @@ class Task < ActiveRecord::Base
         "В процессе выполнения"
       end
     end
+  end
+
+  def notification_create
+
+  end
+
+  def accept
+    self.completed_request = false
+    self.completed = true
+    self.completed_at = Time.now
+  end
+
+  def decline
+    self.completed_request = false
+    self.completed = false
+  end
+
+  def complete
+    self.completed_request = true
+    self.completed = false
+  end
+
+  def cancel
+    self.completed_request = false
+    self.completed = false
+  end
+
+  def accept!
+    accept
+    save!
+  end
+
+  def decline
+    decline
+    save!
+  end
+
+  def complete
+    complete
+    save!
+  end
+
+  def cancel
+    cancel
+    save!
   end
 end

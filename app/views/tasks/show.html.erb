@@ -47,11 +47,8 @@
 <hr />
 
 <div class="form-controls">
-  <% if @task.director == current_user %>
-      <%= link_to("Принять", task_accept_path(@task), :class => "btn btn-success") if not @task.completed %>
-      <%= link_to("Отклонить", task_decline_path(@task), :class => "btn btn-danger") if @task.completed_request and not @task.completed %>
-  <% elsif @task.executor == current_user %>
-      <%= link_to("Выполнить", task_complete_path(@task), :class => "btn btn-success") if not @task.completed_request and not @task.completed %>
-      <%= link_to("Отменить", task_cancel_path(@task), :class => "btn btn-success") if @task.completed_request and not @task.completed %>
-  <% end %>
+  <%= link_to("Принять", task_accept_path(@task), :class => "btn btn-success") if can? :accept, @task %>
+  <%= link_to("Отклонить", task_decline_path(@task), :class => "btn btn-danger") if can? :decline, @task %>
+  <%= link_to("Выполнить", task_complete_path(@task), :class => "btn btn-success") if can? :complete, @task %>
+  <%= link_to("Отменить", task_cancel_path(@task), :class => "btn btn-success") if can? :cancel, @task %>
 </div>

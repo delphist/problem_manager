@@ -1,18 +1,13 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @users = User.order("id DESC").page(params[:page]).per(10)
   end
 
-  def new
-    @user = User.new
-  end
-
-  def edit
-    @user = User.find params[:id]
-  end
-
   def create
-    @user = User.new(user_params)
+    @user.attributes = user_params
+
     if @user.save
       redirect_to users_path
     else
@@ -21,7 +16,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find params[:id]
     set_attributes = user_params.to_hash
     set_attributes.delete "password" if set_attributes["password"].nil? or set_attributes["password"].blank?
     @user.attributes = set_attributes
@@ -34,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find params[:id]
     @user.destroy
     redirect_to users_path
   end

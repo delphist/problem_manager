@@ -1,12 +1,12 @@
 <% breadcrumb :problems %>
 <% content_for :heading_buttons do %>
-    <%= link_to "Добавить проблему", new_problem_path, :class => "btn btn-primary" %>
+    <%= link_to "Добавить проблему", new_problem_path, :class => "btn btn-primary" if can? :create, @problem %>
 <% end %>
 <div class="well">
   <%= form_tag(problems_path, :method => :get) do |f| %>
       <div class="form-group">
         <%= label_tag :subject_id, "Тематика", :class => "control-label" %>
-        <%= select_tag(:subject_id, options_for_select(Subject.all.map {|i| [i.title,i.id] }, params[:subject_id]), { :class => "select2 form-control", :multiple => true, :placeholder => "Выберите тематику проблемы из списка" } ) %>
+        <%= select_tag(:subject_id, options_for_select(Subject.all.map {|i| [i.full_title_joined,i.id] }, params[:subject_id]), { :class => "select2 form-control", :multiple => true, :placeholder => "Выберите тематику проблемы из списка" } ) %>
       </div>
 
       <div class="row">
@@ -83,9 +83,6 @@
       <%= submit_tag "Фильтровать", :class => "btn btn-primary" %>
   <% end %>
 </div>
-
-<a href="<%= new_problem_path %>" class="btn btn-primary">Добавить проблему</a>
-<hr />
 
 <% if @problems.count > 0 %>
     <%= render :partial => params[:view] %>

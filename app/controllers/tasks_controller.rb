@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  load_and_authorize_resource except: [:directioning, :executing]
+
   def index
     if Task.where(:executor => current_user).count > 0
       redirect_to tasks_executing_path
@@ -15,20 +17,7 @@ class TasksController < ApplicationController
     @tasks = Task.where(:executor => current_user).order("deadline_at DESC").page(params[:page]).per(20)
   end
 
-  def new
-    @task = Task.new
-  end
-
-  def show
-    @task = Task.find params[:id]
-  end
-
-  def edit
-    @task = Task.find params[:id]
-  end
-
   def create
-    @task = Task.new(task_params)
     @task.director = current_user
 
     if @task.save
@@ -39,7 +28,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.where(:director => current_user).find params[:id]
     @task.attributes = task_params
 
     if @task.save
@@ -50,9 +38,32 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find params[:id]
     @task.destroy
     redirect_to tasks_path
+  end
+
+  def accept
+    @task = Task.find params[:task_id]
+    @task.accept!
+    redirect_to task_path(@task)
+  end
+
+  def decline
+    @task = Task.find params[:task_id]
+    @task.decline!
+    redirect_to task_path(@task)
+  end
+
+  def complete
+    @task = Task.find params[:task_id]
+    @task.complete!
+    redirect_to task_path(@task)
+  end
+
+  def cancel
+    @task = Task.find params[:task_id]
+    @task.cancel!
+    redirect_to task_path(@task)
   end
 
   private

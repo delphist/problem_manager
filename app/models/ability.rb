@@ -2,6 +2,12 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    can :accept, Task, director: user, completed: false
+    can :decline, Task, director: user, completed_request: true, completed: false
+
+    can :complete, Task, executor: user, completed_request: false, completed: false
+    can :cancel, Task, executor: user, completed_request: true, completed: false
+
     if user.access_level? :read
       can :read, Problem
     end

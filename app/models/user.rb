@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
   end
 
   def access_level_title
-    ACCESS_LEVELS[access_level.to_sym]
+    ACCESS_LEVELS[access_level.to_sym] unless access_level.nil?
   end
 end

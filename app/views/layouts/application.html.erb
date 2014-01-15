@@ -38,12 +38,13 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="<%= problems_path %>">Проблемы</a></li>
-          <li><a href="<%= problems_path(:view => :map) %>">Карта</a></li>
-          <li><a href="<%= subjects_path %>">Тематики</a></li>
-          <li><a href="<%= statuses_path %>">Статусы</a></li>
-          <li><a href="<%= tasks_path %>">Задания <span class="badge"><%= @highlighted_tasks %></span></a></li>
-          <li><a href="<%= users_path %>">Пользователи</a></li>
+          <%= content_tag :li, link_to("Проблемы", problems_path) if can? :read, Problem %>
+          <%= content_tag :li, link_to("Карта", problems_path(:view => :map)) if can? :read, Problem %>
+          <%= content_tag :li, link_to("Тематики", subjects_path) if can? :read, Subject %>
+          <%= content_tag :li, link_to("Статусы", statuses_path) if can? :read, Status %>
+          <%= content_tag :li, link_to("Задания <span class=\"badge\">#{@highlighted_tasks}</span>".html_safe, tasks_path) if can? :read, Task %>
+          <%= content_tag :li, link_to("Пользователи", users_path) if can? :read, User %>
+          <%= content_tag :li, link_to("Выход", destroy_user_session_path, :method => :delete) %>
         </ul>
       </div>
     </div>

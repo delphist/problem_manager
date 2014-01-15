@@ -1,23 +1,17 @@
 class StatusesController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @statuses = Status.page(params[:page]).per(40)
   end
 
-  def new
-    @status = Status.new
-  end
-
   def show
-    @status = Status.find params[:id]
     redirect_to edit_status_path(@status)
   end
 
-  def edit
-    @status = Status.find params[:id]
-  end
 
   def create
-    @status = Status.new(status_params)
+    @status.attributes = status_params
 
     if @status.save
       redirect_to statuses_path
@@ -27,7 +21,6 @@ class StatusesController < ApplicationController
   end
 
   def update
-    @status = Status.find params[:id]
     @status.attributes = status_params
 
     if @status.save
@@ -38,7 +31,6 @@ class StatusesController < ApplicationController
   end
 
   def destroy
-    @status = Status.find params[:id]
     @status.destroy
     redirect_to statuses_path
   end
