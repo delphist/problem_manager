@@ -8,29 +8,7 @@
 
 
 User.create!(
-    :email => "xdelphist@gmail.com",
-    :password => '12345678'
-)
-User.create!(
-    :email => "5002307@gmail.com",
-    :password => '12345678'
-)
-
-Subject.create(
-    :title => "Воровство денег с банковских карт",
-)
-Subject.create(
-    :title => "Нарушения коллекторами прав граждан",
-)
-Subject.create(
-    :title => "Некачественные слуги банков и иных кредитных организаций",
-)
-
-Status.create(
-    :title => "В работе",
-    :map_color => "yellow",
-)
-Status.create(
-    :title => "Ищем контакты",
-    :map_color => "blue",
+    :email => "delphist@me.com",
+    :password => '12345678',
+    :access_level => :full,
 )
