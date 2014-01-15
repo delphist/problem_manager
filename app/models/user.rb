@@ -11,7 +11,11 @@ class User < ActiveRecord::Base
   normalize_attributes :name
 
   def access_level? param
-    param == access_level.to_sym
+    if access_level.nil?
+      false
+    else
+      param == access_level.to_sym
+    end
   end
 
   def access_level_title
