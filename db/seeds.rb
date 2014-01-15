@@ -8,7 +8,8 @@
 
 
 User.create!(
+    :name => "Александр",
     :email => "delphist@me.com",
     :password => '12345678',
-    :access_level => :full,
+    :access_level => "full",
 )
