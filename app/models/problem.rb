@@ -9,9 +9,7 @@ class Problem < ActiveRecord::Base
   validates :email, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
   validates :vk, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
   validates :link, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
-  validates :address, :presence => true, :length => { :in => 2..255 }
-  validates :address_latitude, :presence => true
-  validates :address_longitude, :presence => true
+  validates :address, :presence => false, :length => { :in => 2..255 }, :allow_nil => true
   validates :person, :presence => true, :length => { :in => 2..255 }
   validates :description, :presence => true, :length => { :in => 2..60000 }
   validates :title, :presence => true, :length => { :in => 2..255 }

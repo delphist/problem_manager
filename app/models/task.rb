@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
   after_create :notification_create
 
   def deadline_days
-    (Time.zone.now - deadline_at).to_i / 1.day
+    (deadline_at - Date.today).to_i
   end
 
   def status_title
@@ -59,17 +59,17 @@ class Task < ActiveRecord::Base
     save!
   end
 
-  def decline
+  def decline!
     decline
     save!
   end
 
-  def complete
+  def complete!
     complete
     save!
   end
 
-  def cancel
+  def cancel!
     cancel
     save!
   end

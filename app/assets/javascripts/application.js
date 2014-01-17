@@ -38,8 +38,18 @@ $(function() {
         }
     });
 
+    function mention_user(id) {
+        $('.mentionable').insertAtCaret('@u' + id);
+    }
+
     $('.select2').select2();
     $(".phone-mask").mask("+7 (999) 999-99-99");
+
+    $('.mention-select').on('select2-selecting', function(event) {
+        mention_user(event.val);
+        event.preventDefault();
+        $(this).select2("close");
+    })
 
     $('.datepicker').datetimepicker({
         pickTime: false,
@@ -72,7 +82,7 @@ $(function() {
     });
 
     $('.mention-user').on('click', function(e) {
-        $('.mentionable').insertAtCaret('@u' + $(this).attr('data-user-id'));
+        mention_user($(this).attr('data-user-id'));
         e.preventDefault();
     });
 

@@ -19,8 +19,8 @@
       </thead>
       <tbody>
       <% @tasks.each do |task| %>
-          <tr>
-            <td><%= link_to task.title, task_path(task) %></td>
+          <tr class="<%= task_row_color(task) %>">
+            <td><%= link_to task.title, task_path(task) %><br/><small><%= task.status_title %></small></td>
             <% if current_page?(:action => :executing) %>
                 <td><%= task.director.name %></td>
             <% else %>

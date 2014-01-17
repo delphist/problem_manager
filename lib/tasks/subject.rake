@@ -11,8 +11,10 @@ namespace :subject do
       id = id.to_i
       title.strip!
 
-      subject = Subject.find_or_create_by!(title: title, parent_id: nil)
+      subject = Subject.find_or_initialize_by!(title: title)
+      subject.parent_id = nil
       subjects[id] = subject
+      p subject
       count += 1
     end
 
@@ -22,7 +24,9 @@ namespace :subject do
       parent_id = subjects[id].id
       data.scan(Regexp.new("\\<a.*?\>\<i.*?\>(.*?)\<\/i\>", Regexp::IGNORECASE | Regexp::MULTILINE)).each do |res|
         title = res.first
-        subject = Subject.find_or_create_by!(title: title, parent_id: parent_id)
+        subject = Subject.find_or_initialize_by!(title: title)
+        subject.parent_id = parent_id
+        p subject
         count += 1
       end
     end

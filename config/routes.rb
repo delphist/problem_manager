@@ -22,6 +22,7 @@ ProblemManager::Application.routes.draw do
     get 'accept'
     get 'decline'
     get 'complete'
+    get 'cancel'
   end
   get 'tasks/:id/delete' => 'tasks#destroy', :as => :delete_task
 

@@ -30,7 +30,7 @@
       <div class="col-md-6">
         <div class="form-group<%= " has-error" if task.errors[:executor].any? %>">
           <%= f.label :executor_id, "Исполнитель", :class => "control-label" %>
-          <%= f.collection_select(:executor_id, User.where("id != ?", current_user.id).all, :id, :name, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите исполнителя") %>
+          <%= f.collection_select(:executor_id, User.all, :id, :name, { :include_blank => true }, :class => "select2 form-control", :placeholder => "Выберите исполнителя") %>
           <%= render 'error_messages_for', :object => task, :field => :executor_id %>
         </div>
       </div>

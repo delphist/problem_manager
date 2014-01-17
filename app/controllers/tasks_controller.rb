@@ -14,7 +14,7 @@ class TasksController < ApplicationController
   end
 
   def executing
-    @tasks = Task.where(:executor => current_user).order("deadline_at DESC").page(params[:page]).per(20)
+    @tasks = Task.where(:executor => current_user).order("completed ASC, deadline_at ASC").page(params[:page]).per(20)
   end
 
   def create
