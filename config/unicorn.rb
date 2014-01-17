@@ -1,8 +1,8 @@
 rails_root = "/var/www/pm"
-pid_file   = "/var/www/pm_unicorn.pid"
-socket_file= "/var/www/pm_unicorn.sock"
-log_file   = "/var/www/pm_unicorn.log"
-err_log    = "/var/www/pm_unicorn_error.log"
+pid_file   = "/var/www/pm/unicorn.pid"
+socket_file= "/var/www/pm/unicorn.sock"
+log_file   = "/var/www/pm/unicorn.log"
+err_log    = "/var/www/pm/unicorn_error.log"
 old_pid    = pid_file + '.oldbin'
 
 timeout 30
