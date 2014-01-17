@@ -3,7 +3,7 @@ namespace :subject do
     require 'net/http'
     result = Net::HTTP.get(URI.parse('http://www.angrycitizen.ru/problems'))
 
-    coutn = 0
+    count = 0
 
     subjects = {}
     result.scan(Regexp.new("\<a.*?collapse\-([0-9]+).*?\>(.*?)\<i\>", Regexp::IGNORECASE | Regexp::MULTILINE)).each do |res|
