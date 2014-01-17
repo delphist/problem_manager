@@ -13,6 +13,7 @@ namespace :subject do
 
       subject = Subject.find_or_initialize_by(title: title)
       subject.parent_id = nil
+      subject.save
       subjects[id] = subject
       p subject
       count += 1
