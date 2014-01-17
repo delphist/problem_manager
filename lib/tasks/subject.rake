@@ -13,9 +13,8 @@ namespace :subject do
 
       subject = Subject.find_or_initialize_by(title: title)
       subject.parent_id = nil
-      subject.save
+      subject.save!
       subjects[id] = subject
-      p subject
       count += 1
     end
 
@@ -27,7 +26,7 @@ namespace :subject do
         title = res.first
         subject = Subject.find_or_initialize_by(title: title)
         subject.parent_id = parent_id
-        p subject
+        subject.save!
         count += 1
       end
     end
